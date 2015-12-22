@@ -47,10 +47,12 @@
     _callbackIdPattern = nil;
     
     /**
-     * Elli added lines below to get notified when device orientation changes.
+     * Elli Rego added lines below to get notified when device orientation changes.
      * This is so that we can hide the status bar in landscape mode, otherwise
      * it is blank and cut off due to iOS 7 status bar changes that haven't
      * been fixed in this plugin.
+     *
+     * Updated 12/22/15.
      */
     
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -60,13 +62,15 @@
          object:[UIDevice currentDevice]];
 
     /** 
-     * End of Elli's additions.
+     * End of Elli Rego's additions.
      */
 }
 
 /**
- * Elli added lines below to hide status bar in landscape mode for
+ * Elli Rego added lines below to hide status bar in landscape mode for
  * aforementioned reasons.
+ *
+ * Updated 12/22/15. 
  */
     
 - (void) orientationChanged:(NSNotification *)note
@@ -98,7 +102,7 @@
 }
 
 /** 
- * End of Elli's additions.
+ * End of Elli Rego's additions.
  */
 
 - (void)onReset
@@ -555,13 +559,44 @@
     [self.view sendSubviewToBack:self.webView];
 
     self.webView.delegate = _webViewDelegate;
+
+    /**
+     * Elli Rego added lines below to remove white flash on startup.
+     *
+     * Updated 12/22/15. 
+     */
+    
+    // Default white color is obnoxious
+    // self.webView.backgroundColor = [UIColor whiteColor];
+
+    // Make the background clear instead
     self.webView.backgroundColor = [UIColor clearColor];
+
+    /** 
+     * End of Elli Rego's additions.
+     */
 
     self.webView.clearsContextBeforeDrawing = YES;
     self.webView.clipsToBounds = YES;
     self.webView.contentMode = UIViewContentModeScaleToFill;
     self.webView.multipleTouchEnabled = YES;
+
+    /**
+     * Elli Rego added lines below to remove white flash on startup.
+     *
+     * Updated 12/22/15. 
+     */
+    
+    // If the webView is opaque, the background can't be clear
+    // self.webView.opaque = YES;
+
+    // So, make it not opaque
     self.webView.opaque = NO;
+
+    /** 
+     * End of Elli Rego's additions.
+     */
+    
     self.webView.scalesPageToFit = NO;
     self.webView.userInteractionEnabled = YES;
 
@@ -1065,8 +1100,22 @@
     return YES;
 }
 
+/**
+ * Elli Rego added lines below to fix deprecation warning.
+ *
+ * Updated 12/22/15.
+ */
+
+// NSUNumber return type incompatible (deprecated)
 //- (NSUNumber)supportedInterfaceOrientations
+
+// UIInterfaceOrientationmask return type now supported
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
+
+/** 
+ * End of Elli Rego's additions.
+ */
+
 {
     if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.orientationDelegate supportedInterfaceOrientations];
