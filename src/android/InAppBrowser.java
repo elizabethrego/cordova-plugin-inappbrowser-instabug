@@ -644,7 +644,7 @@ public class InAppBrowser extends CordovaPlugin {
                 inAppWebView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 inAppWebView.setWebChromeClient(new InAppChromeClient(thatWebView));
                 
-                /*
+                /**
                  * Elli added lines below to fix white flash when InAppBrowser opens.
                  */
                 
@@ -654,9 +654,9 @@ public class InAppBrowser extends CordovaPlugin {
                 // Compatibility for SDK < 11
                 inAppWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
                 
-                /*
+                /**
                  * End of Elli's additions.
-                 * /
+                 */
                 
                 WebViewClient client = new InAppBrowserClient(thatWebView, edittext);
                 inAppWebView.setWebViewClient(client);
