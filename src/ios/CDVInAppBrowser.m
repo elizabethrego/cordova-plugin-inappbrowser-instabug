@@ -501,13 +501,40 @@
     [self.view sendSubviewToBack:self.webView];
 
     self.webView.delegate = _webViewDelegate;
-    self.webView.backgroundColor = [UIColor whiteColor];
+    
+    /**
+    * Elli added lines below to fix white flash when InAppBrowser opens.
+    */
+    
+    // White default color
+    //self.webView.backgroundColor = [UIColor whiteColor];
+    
+    // Change to clear
+    self.webView.backgroundColor = [UIColor clearColor];
+    
+    /**
+     * End of Elli's additions.
+     */
 
     self.webView.clearsContextBeforeDrawing = YES;
     self.webView.clipsToBounds = YES;
     self.webView.contentMode = UIViewContentModeScaleToFill;
     self.webView.multipleTouchEnabled = YES;
-    self.webView.opaque = YES;
+    
+    /**
+    * Elli added lines below to fix white flash when InAppBrowser opens.
+    */
+    
+    // If it is opaque, it will still flash
+    //self.webView.opaque = YES;
+    
+    // So make it not opaque
+    self.webView.opaque = NO;
+    
+    /**
+     * End of Elli's additions.
+     */
+     
     self.webView.scalesPageToFit = NO;
     self.webView.userInteractionEnabled = YES;
 
@@ -1011,7 +1038,20 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+/**
+* Elli added lines below to fix a deprecation warning.
+*/
+
+// NSUInteger return type deprecated
+//- (NSUInteger)supportedInterfaceOrientations
+
+// UIInterfaceOrientationMask now supported
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+
+/**
+ * End of Elli's additions.
+ */
+ 
 {
     if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.orientationDelegate supportedInterfaceOrientations];
