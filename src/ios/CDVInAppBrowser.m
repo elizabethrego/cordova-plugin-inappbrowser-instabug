@@ -45,7 +45,61 @@
 {
     _previousStatusBarStyle = -1;
     _callbackIdPattern = nil;
+    
+    /**
+     * Elli added lines below to get notified when device orientation changes.
+     * This is so that we can hide the status bar in landscape mode, otherwise
+     * it is blank and cut off due to iOS 7 status bar changes that haven't
+     * been fixed in this plugin.
+     */
+    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+         addObserver:self selector:@selector(orientationChanged:)
+         name:UIDeviceOrientationDidChangeNotification
+         object:[UIDevice currentDevice]];
+
+    /** 
+     * End of Elli's additions.
+     */
 }
+
+/**
+ * Elli added lines below to hide status bar in landscape mode for
+ * aforementioned reasons.
+ */
+    
+- (void) orientationChanged:(NSNotification *)note
+{
+    UIDevice * device = note.object;
+    
+    switch(device.orientation)
+    {
+        case UIDeviceOrientationPortrait:
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+            break;
+            
+        case UIDeviceOrientationPortraitUpsideDown:
+            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+            break;
+            
+        case UIDeviceOrientationLandscapeLeft:
+            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+            break;
+            
+        case UIDeviceOrientationLandscapeRight:
+            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+            break;
+            
+        default:
+            break;
+    };
+    
+}
+
+/** 
+ * End of Elli's additions.
+ */
 
 - (void)onReset
 {
@@ -64,11 +118,11 @@
 
 - (BOOL) isSystemUrl:(NSURL*)url
 {
-	if ([[url host] isEqualToString:@"itunes.apple.com"]) {
-		return YES;
-	}
+    if ([[url host] isEqualToString:@"itunes.apple.com"]) {
+        return YES;
+    }
 
-	return NO;
+    return NO;
 }
 
 - (void)open:(CDVInvokedUrlCommand*)command
@@ -501,40 +555,13 @@
     [self.view sendSubviewToBack:self.webView];
 
     self.webView.delegate = _webViewDelegate;
-    
-    /**
-    * Elli added lines below to fix white flash when InAppBrowser opens.
-    */
-    
-    // White default color
-    //self.webView.backgroundColor = [UIColor whiteColor];
-    
-    // Change to clear
     self.webView.backgroundColor = [UIColor clearColor];
-    
-    /**
-     * End of Elli's additions.
-     */
 
     self.webView.clearsContextBeforeDrawing = YES;
     self.webView.clipsToBounds = YES;
     self.webView.contentMode = UIViewContentModeScaleToFill;
     self.webView.multipleTouchEnabled = YES;
-    
-    /**
-    * Elli added lines below to fix white flash when InAppBrowser opens.
-    */
-    
-    // If it is opaque, it will still flash
-    //self.webView.opaque = YES;
-    
-    // So make it not opaque
     self.webView.opaque = NO;
-    
-    /**
-     * End of Elli's additions.
-     */
-     
     self.webView.scalesPageToFit = NO;
     self.webView.userInteractionEnabled = YES;
 
@@ -637,7 +664,7 @@
     // the advantage of using UIBarButtonSystemItemDone is the system will localize it for you automatically
     // but, if you want to set this yourself, knock yourself out (we can't set the title for a system Done button, so we have to create a new one)
     self.closeButton = nil;
-    self.closeButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(close)];
+    self.closeButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:self action:@selector(close)];
     self.closeButton.enabled = YES;
     self.closeButton.tintColor = [UIColor colorWithRed:60.0 / 255.0 green:136.0 / 255.0 blue:230.0 / 255.0 alpha:1];
 
@@ -1038,20 +1065,8 @@
     return YES;
 }
 
-/**
-* Elli added lines below to fix a deprecation warning.
-*/
-
-// NSUInteger return type deprecated
-//- (NSUInteger)supportedInterfaceOrientations
-
-// UIInterfaceOrientationMask now supported
+//- (NSUNumber)supportedInterfaceOrientations
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
-
-/**
- * End of Elli's additions.
- */
- 
 {
     if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.orientationDelegate supportedInterfaceOrientations];
