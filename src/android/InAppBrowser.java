@@ -6,9 +6,7 @@
        to you under the Apache License, Version 2.0 (the
        "License"); you may not use this file except in compliance
        with the License.  You may obtain a copy of the License at
-
          http://www.apache.org/licenses/LICENSE-2.0
-
        Unless required by applicable law or agreed to in writing,
        software distributed under the License is distributed on an
        "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -645,7 +643,9 @@ public class InAppBrowser extends CordovaPlugin {
                 inAppWebView.setWebChromeClient(new InAppChromeClient(thatWebView));
                 
                 /**
-                 * Elli added lines below to fix white flash when InAppBrowser opens.
+                 * Elli Rego added lines below to fix white flash when InAppBrowser opens.
+                 *
+                 * Updated 12/22/15.
                  */
                 
                 // Set background transparent rather than default white 
@@ -655,7 +655,7 @@ public class InAppBrowser extends CordovaPlugin {
                 inAppWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
                 
                 /**
-                 * End of Elli's additions.
+                 * End of Elli Regos's additions.
                  */
                 
                 WebViewClient client = new InAppBrowserClient(thatWebView, edittext);
@@ -917,4 +917,3 @@ public class InAppBrowser extends CordovaPlugin {
         }
     }
 }
-
