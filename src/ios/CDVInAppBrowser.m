@@ -45,65 +45,7 @@
 {
     _previousStatusBarStyle = -1;
     _callbackIdPattern = nil;
-    
-    /**
-     * Elli Rego added lines below to get notified when device orientation changes.
-     * This is so that we can hide the status bar in landscape mode, otherwise
-     * it is blank and cut off due to iOS 7 status bar changes that haven't
-     * been fixed in this plugin.
-     *
-     * Updated 12/22/15.
-     */
-    
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter]
-         addObserver:self selector:@selector(orientationChanged:)
-         name:UIDeviceOrientationDidChangeNotification
-         object:[UIDevice currentDevice]];
-
-    /** 
-     * End of Elli Rego's additions.
-     */
 }
-
-/**
- * Elli Rego added lines below to hide status bar in landscape mode for
- * aforementioned reasons.
- *
- * Updated 12/22/15. 
- */
-    
-- (void) orientationChanged:(NSNotification *)note
-{
-    UIDevice * device = note.object;
-    
-    switch(device.orientation)
-    {
-        case UIDeviceOrientationPortrait:
-            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-            break;
-            
-        case UIDeviceOrientationPortraitUpsideDown:
-            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-            break;
-            
-        case UIDeviceOrientationLandscapeLeft:
-            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-            break;
-            
-        case UIDeviceOrientationLandscapeRight:
-            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-            break;
-            
-        default:
-            break;
-    };
-    
-}
-
-/** 
- * End of Elli Rego's additions.
- */
 
 - (void)onReset
 {
