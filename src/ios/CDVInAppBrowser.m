@@ -41,6 +41,9 @@
 
 @implementation CDVInAppBrowser
 
+// Elli Rego added line below to track whether browser was hidden, 01/26/16
+BOOL browserHidden = NO;
+
 - (void)pluginInitialize
 {
     _previousStatusBarStyle = -1;
@@ -62,18 +65,19 @@
     [self.inAppBrowserViewController close];
 }
 
+/**
+ * Elli Rego added lines facilitate hiding the browser.
+ *
+ * Updated 01/26/16.
+ */
 - (void)hide:(CDVInvokedUrlCommand*)command
 {
-    NSLog(@"Hide called");
-    // Run later to avoid the "took a long time" log message.
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([weakSelf respondsToSelector:@selector(presentingViewController)]) {
-            [[weakSelf presentingViewController] dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            [[weakSelf parentViewController] dismissViewControllerAnimated:YES completion:nil];
-        }
-    });
- }
+    [self.inAppBrowserViewController hide];
+    browserHidden = YES;
+}
+/**
+ * End of Elli Rego's additions.
+ */
 
 - (BOOL) isSystemUrl:(NSURL*)url
 {
@@ -220,9 +224,23 @@
         NSLog(@"Tried to show IAB after it was closed.");
         return;
     }
+    
     if (_previousStatusBarStyle != -1) {
-        NSLog(@"Tried to show IAB while already shown");
-        return;
+        /**
+         * Elli Rego added lines below to allow browser to show after being hidden.
+         *
+         * Updated 01/26/16.
+         */
+        if (!browserHidden) {
+            // This was the original code inside the above condition
+            NSLog(@"Tried to show IAB while already shown");
+            return;
+        } else {
+            browserHidden = NO;
+        }
+        /**
+         * End of Elli Rego's additions.
+         */
     }
 
     _previousStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
@@ -812,6 +830,28 @@
         }
     });
 }
+
+/**
+ * Elli Rego added lines facilitate hiding the browser.
+ *
+ * Updated 01/26/16.
+ */
+- (void) hide
+{
+    __weak UIViewController* weakSelf = self;
+    
+    // Run later to avoid the "took a long time" log message.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([weakSelf respondsToSelector:@selector(presentingViewController)]) {
+            [[weakSelf presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [[weakSelf parentViewController] dismissViewControllerAnimated:YES completion:nil];
+        }
+    });
+}
+/**
+ * End of Elli Rego's additions.
+ */
 
 - (void)navigateTo:(NSURL*)url
 {
