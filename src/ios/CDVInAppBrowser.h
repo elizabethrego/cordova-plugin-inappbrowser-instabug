@@ -95,6 +95,8 @@
 @property (nonatomic) NSURL* currentURL;
 
 - (void)close;
+// Elli Rego added line below to hide browser
+- (void)hide;
 - (void)navigateTo:(NSURL*)url;
 - (void)showLocationBar:(BOOL)show;
 - (void)showToolBar:(BOOL)show : (NSString *) toolbarPosition;
