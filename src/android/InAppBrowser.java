@@ -240,6 +240,11 @@ public class InAppBrowser extends CordovaPlugin {
             pluginResult.setKeepCallback(true);
             this.callbackContext.sendPluginResult(pluginResult);
         }
+        /**
+        * Elli Rego added lines facilitate hiding the browser.
+        *
+        * Updated 01/26/16.
+        */
         else if (action.equals("hide")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -251,6 +256,9 @@ public class InAppBrowser extends CordovaPlugin {
             pluginResult.setKeepCallback(true);
             this.callbackContext.sendPluginResult(pluginResult);
         }
+        /**
+         * End of Elli Rego's additions.
+         */
         else {
             return false;
         }
