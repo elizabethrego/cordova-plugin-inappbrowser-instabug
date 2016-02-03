@@ -66,6 +66,17 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+/**
+ * Elli Rego added lines below to facilitate
+ * adding InAppBrowser to Instabug screenshots.
+ *
+ * Updated 02/02/16.
+ */
+import com.instabug.library.Instabug;
+/**
+ * End of Elli Rego's additions.
+ */
+
 @SuppressLint("SetJavaScriptEnabled")
 public class InAppBrowser extends CordovaPlugin {
 
@@ -234,6 +245,16 @@ public class InAppBrowser extends CordovaPlugin {
                 @Override
                 public void run() {
                     dialog.show();
+                    /**
+                      * Elli Rego added lines below to facilitate
+                      * adding InAppBrowser to Instabug screenshots.
+                      *
+                      * Updated 02/02/16.
+                      */
+                    Instabug.getInstance().setDialog(dialog);
+                    /**
+                      * End of Elli Rego's additions.
+                      */
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
@@ -241,7 +262,8 @@ public class InAppBrowser extends CordovaPlugin {
             this.callbackContext.sendPluginResult(pluginResult);
         }
         /**
-        * Elli Rego added lines facilitate hiding the browser.
+        * Elli Rego added lines below to 
+        * facilitate hiding the browser.
         *
         * Updated 01/26/16.
         */
