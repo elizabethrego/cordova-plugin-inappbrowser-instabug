@@ -834,20 +834,22 @@ BOOL browserHidden = NO;
 /**
  * Elli Rego added lines facilitate hiding the browser.
  *
- * Updated 01/26/16.
+ * Updated 02/02/16.
  */
 - (void) hide
 {
     __weak UIViewController* weakSelf = self;
     
     // Run later to avoid the "took a long time" log message.
-    dispatch_async(dispatch_get_main_queue(), ^{
+    // Actually, DO NOT run later because it causes a big issue
+    // when trying to show Card.IO view.
+    //dispatch_async(dispatch_get_main_queue(), ^{
         if ([weakSelf respondsToSelector:@selector(presentingViewController)]) {
             [[weakSelf presentingViewController] dismissViewControllerAnimated:YES completion:nil];
         } else {
             [[weakSelf parentViewController] dismissViewControllerAnimated:YES completion:nil];
         }
-    });
+    //});
 }
 /**
  * End of Elli Rego's additions.
