@@ -272,6 +272,7 @@ public class InAppBrowser extends CordovaPlugin {
                 @Override
                 public void run() {
                     dialog.hide();
+                    Instabug.getInstance().setDialog(null);
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
