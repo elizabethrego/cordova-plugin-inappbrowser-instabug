@@ -66,13 +66,15 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+
 /**
  * Elli Rego added lines below to facilitate
  * adding InAppBrowser to Instabug screenshots.
  *
- * Updated 02/02/16.
+ * Updated 02/05/16.
  */
 import com.instabug.library.Instabug;
+import java.lang.IllegalStateException;
 /**
  * End of Elli Rego's additions.
  */
@@ -249,10 +251,12 @@ public class InAppBrowser extends CordovaPlugin {
                       * Elli Rego added lines below to facilitate
                       * adding InAppBrowser to Instabug screenshots.
                       *
-                      * Updated 02/02/16.
+                      * Updated 02/05/16.
                       */
-                    Instabug.getInstance().setDialog(dialog);
-                    /**
+                   try {
+                     Instabug.getInstance().setDialog(dialog);
+                   } catch (IllegalStateException e) {}
+                     /**
                       * End of Elli Rego's additions.
                       */
                 }
@@ -272,7 +276,9 @@ public class InAppBrowser extends CordovaPlugin {
                 @Override
                 public void run() {
                     dialog.hide();
-                    Instabug.getInstance().setDialog(null);
+                    try {
+                     Instabug.getInstance().setDialog(null);
+                   } catch (IllegalStateException e) {}
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
