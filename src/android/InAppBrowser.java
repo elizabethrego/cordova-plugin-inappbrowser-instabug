@@ -66,7 +66,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-
 /**
  * Elli Rego added lines below to facilitate
  * adding InAppBrowser to Instabug screenshots.
@@ -150,8 +149,38 @@ public class InAppBrowser extends CordovaPlugin {
                                 Method iuw = Config.class.getMethod("isUrlWhiteListed", String.class);
                                 shouldAllowNavigation = (Boolean)iuw.invoke(null, url);
                             } catch (NoSuchMethodException e) {
+                              /**
+                               * Elli Rego added lines below to add log
+                               * to Instabug.
+                               *
+                               * Updated 02/08/16.
+                               */
+                              Instabug.getInstance().reportException(e);
+                              /**
+                               * End of Elli Rego's additions.
+                               */
                             } catch (IllegalAccessException e) {
+                              /**
+                               * Elli Rego added lines below to add log
+                               * to Instabug.
+                               *
+                               * Updated 02/08/16.
+                               */
+                              Instabug.getInstance().reportException(e);
+                              /**
+                               * End of Elli Rego's additions.
+                               */
                             } catch (InvocationTargetException e) {
+                              /**
+                               * Elli Rego added lines below to add log
+                               * to Instabug.
+                               *
+                               * Updated 02/08/16.
+                               */
+                              Instabug.getInstance().reportException(e);
+                              /**
+                               * End of Elli Rego's additions.
+                               */
                             }
                         }
                         if (shouldAllowNavigation == null) {
@@ -161,8 +190,38 @@ public class InAppBrowser extends CordovaPlugin {
                                 Method san = pm.getClass().getMethod("shouldAllowNavigation", String.class);
                                 shouldAllowNavigation = (Boolean)san.invoke(pm, url);
                             } catch (NoSuchMethodException e) {
+                              /**
+                               * Elli Rego added lines below to add log
+                               * to Instabug.
+                               *
+                               * Updated 02/08/16.
+                               */
+                              Instabug.getInstance().reportException(e);
+                              /**
+                               * End of Elli Rego's additions.
+                               */
                             } catch (IllegalAccessException e) {
+                              /**
+                               * Elli Rego added lines below to add log
+                               * to Instabug.
+                               *
+                               * Updated 02/08/16.
+                               */
+                              Instabug.getInstance().reportException(e);
+                              /**
+                               * End of Elli Rego's additions.
+                               */
                             } catch (InvocationTargetException e) {
+                              /**
+                               * Elli Rego added lines below to add log
+                               * to Instabug.
+                               *
+                               * Updated 02/08/16.
+                               */
+                              Instabug.getInstance().reportException(e);
+                              /**
+                               * End of Elli Rego's additions.
+                               */
                             }
                         }
                         // load in webview
@@ -180,6 +239,16 @@ public class InAppBrowser extends CordovaPlugin {
                                 cordova.getActivity().startActivity(intent);
                             } catch (android.content.ActivityNotFoundException e) {
                                 LOG.e(LOG_TAG, "Error dialing " + url + ": " + e.toString());
+                              /**
+                               * Elli Rego added lines below to add log
+                               * to Instabug.
+                               *
+                               * Updated 02/08/16.
+                               */
+                              Instabug.getInstance().reportException(e);
+                              /**
+                               * End of Elli Rego's additions.
+                               */
                             }
                         }
                         // load in InAppBrowser
@@ -255,7 +324,9 @@ public class InAppBrowser extends CordovaPlugin {
                       */
                    try {
                      Instabug.getInstance().setDialog(dialog);
-                   } catch (IllegalStateException e) {}
+                   } catch (IllegalStateException e) {
+                      Instabug.getInstance().reportException(e);
+                   }
                      /**
                       * End of Elli Rego's additions.
                       */
@@ -278,7 +349,9 @@ public class InAppBrowser extends CordovaPlugin {
                     dialog.hide();
                     try {
                      Instabug.getInstance().setDialog(null);
-                   } catch (IllegalStateException e) {}
+                   } catch (IllegalStateException e) {
+                      Instabug.getInstance().reportException(e);
+                   }
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
@@ -400,6 +473,16 @@ public class InAppBrowser extends CordovaPlugin {
             return "";
         } catch (android.content.ActivityNotFoundException e) {
             Log.d(LOG_TAG, "InAppBrowser: Error loading url "+url+":"+ e.toString());
+            /**
+             * Elli Rego added lines below to add log
+             * to Instabug.
+             *
+             * Updated 02/08/16.
+             */
+            Instabug.getInstance().reportException(e);
+            /**
+             * End of Elli Rego's additions.
+             */
             return e.toString();
         }
     }
@@ -438,6 +521,16 @@ public class InAppBrowser extends CordovaPlugin {
             sendUpdate(obj, false);
         } catch (JSONException ex) {
             Log.d(LOG_TAG, "Should never happen");
+            /**
+             * Elli Rego added lines below to add log
+             * to Instabug.
+             *
+             * Updated 02/08/16.
+             */
+            Instabug.getInstance().reportException(e);
+            /**
+             * End of Elli Rego's additions.
+             */
         }
     }
 
@@ -839,6 +932,16 @@ public class InAppBrowser extends CordovaPlugin {
                     cordova.getActivity().startActivity(intent);
                 } catch (android.content.ActivityNotFoundException e) {
                     LOG.e(LOG_TAG, "Error dialing " + url + ": " + e.toString());
+                    /**
+                     * Elli Rego added lines below to add log
+                     * to Instabug.
+                     *
+                     * Updated 02/08/16.
+                     */
+                    Instabug.getInstance().reportException(e);
+                    /**
+                     * End of Elli Rego's additions.
+                     */
                 }
             }
 
@@ -849,6 +952,16 @@ public class InAppBrowser extends CordovaPlugin {
                     cordova.getActivity().startActivity(intent);
                 } catch (android.content.ActivityNotFoundException e) {
                     LOG.e(LOG_TAG, "Error with " + url + ": " + e.toString());
+                    /**
+                     * Elli Rego added lines below to add log
+                     * to Instabug.
+                     *
+                     * Updated 02/08/16.
+                     */
+                    Instabug.getInstance().reportException(e);
+                    /**
+                     * End of Elli Rego's additions.
+                     */
                 }
             }
             // If sms:5551212?body=This is the message
@@ -880,6 +993,16 @@ public class InAppBrowser extends CordovaPlugin {
                     cordova.getActivity().startActivity(intent);
                 } catch (android.content.ActivityNotFoundException e) {
                     LOG.e(LOG_TAG, "Error sending sms " + url + ":" + e.toString());
+                    /**
+                     * Elli Rego added lines below to add log
+                     * to Instabug.
+                     *
+                     * Updated 02/08/16.
+                     */
+                    Instabug.getInstance().reportException(e);
+                    /**
+                     * End of Elli Rego's additions.
+                     */
                 }
             }
             else {
@@ -898,6 +1021,16 @@ public class InAppBrowser extends CordovaPlugin {
                 sendUpdate(obj, true);
             } catch (JSONException ex) {
                 Log.d(LOG_TAG, "Should never happen");
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
             }
         }
 
@@ -912,6 +1045,16 @@ public class InAppBrowser extends CordovaPlugin {
                 sendUpdate(obj, true);
             } catch (JSONException ex) {
                 Log.d(LOG_TAG, "Should never happen");
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
             }
         }
 
@@ -928,6 +1071,16 @@ public class InAppBrowser extends CordovaPlugin {
                 sendUpdate(obj, true, PluginResult.Status.ERROR);
             } catch (JSONException ex) {
                 Log.d(LOG_TAG, "Should never happen");
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
             }
         }
         
@@ -943,8 +1096,38 @@ public class InAppBrowser extends CordovaPlugin {
                 Method gpm = webView.getClass().getMethod("getPluginManager");
                 pluginManager = (PluginManager)gpm.invoke(webView);
             } catch (NoSuchMethodException e) {
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
             } catch (IllegalAccessException e) {
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
             } catch (InvocationTargetException e) {
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
             }
             
             if (pluginManager == null) {
@@ -952,7 +1135,27 @@ public class InAppBrowser extends CordovaPlugin {
                     Field pmf = webView.getClass().getField("pluginManager");
                     pluginManager = (PluginManager)pmf.get(webView);
                 } catch (NoSuchFieldException e) {
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
                 } catch (IllegalAccessException e) {
+                /**
+                 * Elli Rego added lines below to add log
+                 * to Instabug.
+                 *
+                 * Updated 02/08/16.
+                 */
+                Instabug.getInstance().reportException(e);
+                /**
+                 * End of Elli Rego's additions.
+                 */
                 }
             }
             
