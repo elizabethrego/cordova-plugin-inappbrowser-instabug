@@ -527,7 +527,7 @@ public class InAppBrowser extends CordovaPlugin {
              *
              * Updated 02/08/16.
              */
-            Instabug.getInstance().reportException(e);
+            Instabug.getInstance().reportException(ex);
             /**
              * End of Elli Rego's additions.
              */
@@ -1027,7 +1027,7 @@ public class InAppBrowser extends CordovaPlugin {
                  *
                  * Updated 02/08/16.
                  */
-                Instabug.getInstance().reportException(e);
+                Instabug.getInstance().reportException(ex);
                 /**
                  * End of Elli Rego's additions.
                  */
@@ -1051,7 +1051,7 @@ public class InAppBrowser extends CordovaPlugin {
                  *
                  * Updated 02/08/16.
                  */
-                Instabug.getInstance().reportException(e);
+                Instabug.getInstance().reportException(ex);
                 /**
                  * End of Elli Rego's additions.
                  */
@@ -1077,7 +1077,7 @@ public class InAppBrowser extends CordovaPlugin {
                  *
                  * Updated 02/08/16.
                  */
-                Instabug.getInstance().reportException(e);
+                Instabug.getInstance().reportException(ex);
                 /**
                  * End of Elli Rego's additions.
                  */
