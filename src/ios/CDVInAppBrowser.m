@@ -810,6 +810,10 @@ BOOL browserHidden = NO;
     return UIStatusBarStyleDefault;
 }
 
+	- (BOOL)prefersStatusBarHidden {		
+    return NO;		
+}
+
 - (void)close
 {
     [CDVUserAgentUtil releaseLock:&_userAgentLockToken];
@@ -1071,6 +1075,7 @@ BOOL browserHidden = NO;
 
 @end
 
+
 @implementation CDVInAppBrowserNavigationController : UINavigationController
 
 - (void) viewDidLoad {
@@ -1079,13 +1084,26 @@ BOOL browserHidden = NO;
 
     // simplified from: http://stackoverflow.com/a/25669695/219684
 
-    UIToolbar* bgToolbar = [[UIToolbar alloc] initWithFrame:frame];
+    UIToolbar* bgToolbar = [[UIToolbar alloc] initWithFrame:[self invertFrameIfNeeded:frame]];
     bgToolbar.barStyle = UIBarStyleDefault;
+    [bgToolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self.view addSubview:bgToolbar];
 
     [super viewDidLoad];
 }
 
+- (CGRect) invertFrameIfNeeded:(CGRect)rect {
+    // We need to invert since on iOS 7 frames are always in Portrait context
+    if (!IsAtLeastiOSVersion(@"8.0")) {
+        if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            CGFloat temp = rect.size.width;
+            rect.size.width = rect.size.height;
+            rect.size.height = temp;
+            rect.origin = CGPointZero;
+        }
+    }
+    return rect;
+}
 
 #pragma mark CDVScreenOrientationDelegate
 
@@ -1097,22 +1115,7 @@ BOOL browserHidden = NO;
     return YES;
 }
 
-/**
- * Elli Rego added lines below to fix deprecation warning.
- *
- * Updated 12/22/15.
- */
-
-// NSUNumber return type incompatible (deprecated)
-//- (NSUNumber)supportedInterfaceOrientations
-
-// UIInterfaceOrientationmask return type now supported
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-
-/** 
- * End of Elli Rego's additions.
- */
-
+- (NSUInteger)supportedInterfaceOrientations
 {
     if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.orientationDelegate supportedInterfaceOrientations];
@@ -1132,4 +1135,3 @@ BOOL browserHidden = NO;
 
 
 @end
-
