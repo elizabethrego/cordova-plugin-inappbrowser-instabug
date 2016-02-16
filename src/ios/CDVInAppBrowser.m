@@ -1099,8 +1099,8 @@ BOOL browserHidden = NO;
             CGFloat temp = rect.size.width;
             rect.size.width = rect.size.height;
             rect.size.height = temp;
-            rect.origin = CGPointZero;
         }
+        rect.origin = CGPointZero;
     }
     return rect;
 }
