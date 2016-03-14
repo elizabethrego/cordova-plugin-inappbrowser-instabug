@@ -48,9 +48,6 @@
 
 @implementation CDVInAppBrowser
 
-// Elli Rego added line below to track whether browser was hidden, 01/26/16
-//BOOL browserHidden = NO;
-
 - (void)pluginInitialize
 {
     _previousStatusBarStyle = -1;
@@ -211,7 +208,11 @@
         [self show:nil];
     }
 }
-
+/**
+ * Elli Rego added functions below to match existing 'hide' PR: https://github.com/herrevilkitten/cordova-plugin-inappbrowser/commit/573b1bdc777370a8af860a5b6044e8ddb3f69932
+ *
+ * Updated 03/14/16
+ */
 - (void)show:(CDVInvokedUrlCommand*)command
 {
     if (self.inAppBrowserViewController == nil) {
@@ -261,6 +262,9 @@
         }
     });
 }
+/**
+ * End of Elli Rego's additions.
+ */
 
 - (void)openInCordovaWebView:(NSURL*)url withOptions:(NSString*)options
 {
